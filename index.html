@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Valentine 💌</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Press Start 2P", cursive;
+        background: linear-gradient(180deg, #3a0519, #4b2e2b);
+        overflow: hidden;
+      }
+
+      /* PAGE */
+      .page {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: 0.5s;
+      }
+      .hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.9);
+      }
+
+      /* ENVELOPE */
+      .envelope {
+        width: 260px;
+        height: 170px;
+        background: #670d2f;
+        position: relative;
+        cursor: pointer;
+        perspective: 1000px;
+      }
+      .flap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #3a0519;
+        transform-origin: top;
+        transition: 1s;
+      }
+      .letter-text {
+        color: #ef88ad;
+      }
+
+      .envelope.open .flap {
+        transform: rotateX(180deg);
+      }
+      .letter-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ef88ad;
+        font-size: 10px;
+      }
+
+      /* CHAT */
+      .chat-container {
+        width: 95%;
+        max-width: 420px;
+        height: 85vh;
+        background: linear-gradient(180deg, #3a0519, #4b2e2b);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      }
+
+      .chat-body {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      .bubble {
+        padding: 12px;
+        margin: 8px 0;
+        border-radius: 20px;
+        max-width: 75%;
+        font-size: 10px;
+        animation: pop 0.3s;
+      }
+      .question {
+        background: #3a0519;
+        color: #ef88ad;
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+        border: 1px solid #670d2f;
+      }
+
+      .answer {
+        background: #670d2f;
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+        border: 1px solid #a53860;
+      }
+
+      @keyframes pop {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      /* INPUT */
+      .input-area {
+        padding: 15px;
+        border-top: 1px solid #eee;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+
+      input {
+        flex: 1;
+        padding: 12px;
+        border-radius: 25px;
+        border: 1px solid #c6a9b4;
+        font-size: 12px;
+        background: #430400;
+        color: #ef88ad;
+      }
+
+      input::placeholder {
+        color: #a53860;
+      }
+
+      button {
+        padding: 12px 15px;
+        border: none;
+        border-radius: 40px;
+        background: #430400;
+        color: white;
+        font-size: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 1px solid #c6a9b4;
+      }
+
+      button:hover {
+        background: #ef88ad;
+        color: #3a0519;
+      }
+
+      .option-btn {
+        background: #670d2f;
+        color: #ef88ad;
+        margin: 6px;
+        min-width: 140px;
+        text-align: center;
+        border: 1px solid #a53860;
+      }
+
+      /* SHAKE */
+      .shake {
+        animation: shake 0.4s;
+      }
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      /* LOVE SCREEN */
+      #loveScreen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 16px;
+        color: #ff4d6d;
+        padding: 20px;
+      }
+
+      /* FINAL */
+      #final {
+        background: linear-gradient(180deg, #3a0519, #000000);
+        color: #ef88ad;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .bg-love {
+        position: absolute;
+        width: 100%;
+        height: 200%;
+        top: -100%;
+        left: 0;
+        overflow: hidden;
+      }
+      .bg-track {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 60px;
+        color: rgba(239, 136, 173, 0.06);
+        animation: fallBg 20s linear infinite;
+      }
+
+      @keyframes fallBg {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(100%);
+        }
+      }
+
+      .final-wrapper {
+        z-index: 2;
+      }
+      .final-title {
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+      .postcards {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .card {
+        width: 100px;
+        background: white;
+        padding: 8px;
+        border-radius: 10px;
+        transform: rotate(-3deg);
+        transition: 0.4s;
+      }
+      .card:nth-child(2) {
+        transform: rotate(2deg);
+      }
+      .card:nth-child(3) {
+        transform: rotate(-1deg);
+      }
+      .card:hover {
+        transform: scale(1.1) rotate(0deg);
+      }
+      .card img {
+        width: 100%;
+        border-radius: 5px;
+      }
+
+      /* LOVE RAIN */
+      #loveRain {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+      .loveText {
+        position: absolute;
+        top: -50px;
+        color: rgba(255, 77, 136, 0.15);
+        font-size: 20px;
+        animation: fall linear forwards;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(110vh);
+        }
+      }
+
+      /* RESULT POPUP */
+      #resultPopup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #4b2e2b;
+        padding: 20px;
+        border-radius: 15px;
+        z-index: 999;
+        display: none;
+      }
+      #resultPopup img {
+        width: 150px;
+      }
+
+      /* HEART RAIN */
+      #hearts {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .heart {
+        position: absolute;
+        top: -20px;
+        font-size: 20px;
+        animation: fallHeart linear infinite;
+      }
+      @keyframes fallHeart {
+        to {
+          transform: translateY(110vh);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="hearts"></div>
+
+    <div id="page1" class="page">
+      <div class="envelope" onclick="openEnvelope()">
+        <div class="flap"></div>
+        <div class="letter-text">Happy Valentine Day 💌</div>
+      </div>
+    </div>
+
+    <div id="page2" class="page hidden">
+      <div class="chat-container">
+        <div class="chat-body" id="chat"></div>
+        <div class="input-area" id="inputArea"></div>
+      </div>
+    </div>
+
+    <div id="loveScreen" class="page hidden"></div>
+
+    <div id="final" class="page hidden">
+      <div id="loveRain"></div>
+      <div class="bg-love">
+        <div class="bg-track">
+          I LOVE YOU I LOVE YOU I LOVE YOU I LOVE YOU I LOVE YOU
+        </div>
+      </div>
+      <div class="final-wrapper">
+        <h2 class="final-title">I love you sayang 💌</h2>
+        <div class="postcards">
+          <div class="card"><img src="assets/foto1.jpeg" /></div>
+          <div class="card"><img src="assets/foto2.jpeg" /></div>
+          <div class="card"><img src="assets/foto3.jpeg" /></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT POPUP GLOBAL -->
+    <div id="resultPopup">
+      <img id="resultImage" />
+    </div>
+
+    <!-- AUDIO (TIDAK DOBEL) -->
+    <audio id="soundBenar" src="assets/benar.mp3"></audio>
+    <audio id="soundSalah" src="assets/salah.mp3"></audio>
+    <audio id="music" src="assets/lagu.mp3" loop></audio>
+
+    <script>
+      let current = 0;
+      let wrong = 0;
+      let X = "",
+        Y = "";
+
+      const questions = [
+        { type: "text", q: "Siapa nama pacar kamu?", a: "mifdaul syifa" },
+        { type: "text", q: "Siapa nama lengkap kamu?", a: "muhammad danial" },
+        { type: "date", q: "Tanggal berapa kita jadian?", a: "2025-03-16" },
+        {
+          type: "choice",
+          q: "Tau gak hari ini hari apa?",
+          options: [
+            "Hari manis",
+            "Hari Valentine",
+            "Hari jadi kita",
+            "Hari apa aja terserah",
+          ],
+          a: "Hari Valentine",
+        },
+        {
+          type: "choice",
+          q: "Kamu sayang aku gak?",
+          options: ["Sayang kok", "Sayang banget", "Sayang", "Gak sayang"],
+          a: "Gak sayang",
+        },
+      ];
+
+      function openEnvelope() {
+        document.querySelector(".envelope").classList.add("open");
+        setTimeout(() => {
+          goToPage("page2");
+          askQuestion();
+        }, 1200);
+      }
+
+      function goToPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.add("hidden"));
+        document.getElementById(id).classList.remove("hidden");
+      }
+
+      function addBubble(text, type) {
+        let div = document.createElement("div");
+        div.className = "bubble " + type;
+        div.innerText = text;
+        chat.appendChild(div);
+        chat.scrollTop = 9999;
+      }
+
+      function askQuestion() {
+        addBubble(questions[current].q, "question");
+        renderInput();
+      }
+
+      function renderInput() {
+        inputArea.innerHTML = "";
+        let q = questions[current];
+
+        if (q.type === "text") {
+          inputArea.innerHTML = `<input id="answerInput"><button onclick="submitText()">Kirim</button>`;
+        } else if (q.type === "date") {
+          inputArea.innerHTML = `<input type="date" id="answerInput"><button onclick="submitText()">Kirim</button>`;
+        } else if (q.type === "choice") {
+          q.options.forEach((opt) => {
+            let btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt;
+            btn.onclick = () => submitChoice(opt);
+            inputArea.appendChild(btn);
+          });
+        }
+      }
+
+      function submitText() {
+        let val = document
+          .getElementById("answerInput")
+          .value.trim()
+          .toLowerCase();
+        checkAnswer(val);
+      }
+
+      function submitChoice(val) {
+        checkAnswer(val);
+      }
+
+      function checkAnswer(val) {
+        addBubble(val, "answer");
+        let correct = questions[current].a;
+
+        if (val === correct || val === correct.toLowerCase()) {
+          showResult(true);
+          wrong = 0;
+
+          if (current === 0) X = val;
+          if (current === 1) {
+            Y = val;
+            showLove();
+            return;
+          }
+
+          if (current === 4) {
+            addBubble("oh jadi gak sayang? tapi yaudah lanjut 😒", "question");
+          }
+
+          current++;
+          if (current < questions.length) {
+            setTimeout(askQuestion, 800);
+          } else {
+            setTimeout(showFinal, 1200);
+          }
+        } else {
+          showResult(false);
+          wrong++;
+
+          document.querySelector(".chat-container").classList.add("shake");
+          setTimeout(
+            () =>
+              document
+                .querySelector(".chat-container")
+                .classList.remove("shake"),
+            400,
+          );
+
+          if (wrong >= 2) {
+            current = 0;
+            wrong = 0;
+            addBubble("2x salah. Ulang dari awal 😜", "question");
+            setTimeout(() => {
+              chat.innerHTML = "";
+              askQuestion();
+            }, 1000);
+          }
+        }
+      }
+
+      function showLove() {
+        goToPage("loveScreen");
+        loveScreen.innerText = X + " ❤️ " + Y;
+        setTimeout(() => {
+          current++;
+          goToPage("page2");
+          askQuestion();
+        }, 5000);
+      }
+
+      function showFinal() {
+        goToPage("final");
+        music.play();
+        setInterval(createLoveText, 400);
+      }
+
+      function showResult(isCorrect) {
+        const popup = document.getElementById("resultPopup");
+        const img = document.getElementById("resultImage");
+
+        if (isCorrect) {
+          img.src = "assets/senang.gif";
+          soundBenar.currentTime = 0;
+          soundBenar.play();
+        } else {
+          img.src = "assets/marah.gif";
+          soundSalah.currentTime = 0;
+          soundSalah.play();
+        }
+
+        popup.style.display = "block";
+        setTimeout(() => (popup.style.display = "none"), 1500);
+      }
+
+      function createLoveText() {
+        const text = document.createElement("div");
+        text.className = "loveText";
+        text.innerText = "I LOVE YOU";
+        text.style.left = Math.random() * 100 + "vw";
+        text.style.animationDuration = Math.random() * 4 + 4 + "s";
+        loveRain.appendChild(text);
+        setTimeout(() => text.remove(), 8000);
+      }
+      /* HEART RAIN */
+      function heartRain() {
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerText = "❤";
+        h.style.color = ["#EF88AD", "#A53860", "#670D2F", "#6F3B2E"][
+          Math.floor(Math.random() * 4)
+        ];
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.animationDuration = Math.random() * 3 + 2 + "s";
+        document.getElementById("hearts").appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }
+
+      setInterval(heartRain, 300);
+    </script>
+  </body>
+</html>
